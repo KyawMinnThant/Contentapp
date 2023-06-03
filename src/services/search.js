@@ -41,7 +41,6 @@ export const search = createSlice({
     singleDelete: (state, { payload }) => {
       state.cartItems = state.cartItems.filter((item) => item.id !== payload);
       Cookies.set(STORE_KEY, JSON.stringify(state.cartItems));
-      notify();
     },
   },
 });

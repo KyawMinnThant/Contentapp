@@ -19,6 +19,8 @@ const Trash = () => {
 
   const nav = useNavigate();
   const notify = () => toast.error("Trash is Emptied");
+  const success = () => toast.success("Item has been restored");
+  const single = () => toast.error("Item has been deleted");
 
   const [createContent] = useCreateContentMutation();
   const token = Cookies.get("token");
@@ -26,7 +28,7 @@ const Trash = () => {
   const restore = async (value, token) => {
     const { data } = await createContent({ token, content: value });
     if (data?.success) {
-      //   notify();
+      return success();
       //   nav("/");
     }
   };
@@ -51,8 +53,8 @@ const Trash = () => {
               Trash All
             </button>
 
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-              <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <div className="w-[800px] mt-20overflow-x-scroll shadow-md sm:rounded-lg">
+              <table className="w-full overflow-scroll text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th scope="col" className="px-6 py-3">
@@ -72,6 +74,7 @@ const Trash = () => {
                     </th>
                   </tr>
                 </thead>
+
                 <tbody>
                   {binItems
                     ?.filter((item) => {
@@ -81,13 +84,12 @@ const Trash = () => {
                         return item.name.toLowerCase().includes(search);
                       }
                     })
-                    .map((item, index) => {
-                      console.log(Object.values(item));
+                    .map((item) => {
                       console.log(search?.length);
                       return (
                         <tr
                           key={item?.id}
-                          className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                          className="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
                         >
                           {Object.values(item).length && (
                             <>
@@ -114,9 +116,9 @@ const Trash = () => {
                                   <MdRestorePage size={30} />
                                 </button>
                                 <button
-                                  onClick={() =>
-                                    dispatch(singleDelete(item?.id))
-                                  }
+                                  onClick={() => {
+                                    dispatch(singleDelete(item?.id)), single();
+                                  }}
                                   className="font-medium text-red-600 dark:text-red-500 hover:underline"
                                 >
                                   <MdDelete size={30} />
@@ -128,14 +130,14 @@ const Trash = () => {
                       );
                     })}
                 </tbody>
-              </table>{" "}
+              </table>
               {filtersearch.length === 0 && <Noresult />}
             </div>
           </div>
         ) : (
           <div className=" flex flex-col justify-center align-middle items-center h-96">
             <div className="  px-6 py-4">
-              <p className=" text-gray-500  rounded-md mb-5 text-3xl md:text-5xl">
+              <p className=" text-gray-300 font-bold  rounded-md mb-5 text-3xl md:text-5xl">
                 Trash is Empty
               </p>
             </div>
