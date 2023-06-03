@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import { useElementSize } from "@mantine/hooks";
+import Noresult from "./Noresult";
 // import { data } from "autoprefixer";
 // import Header from "../components/Header";
 
@@ -36,8 +37,10 @@ const ContactList = () => {
   });
 
   const filtersearch = content?.contacts.data.filter((item) => {
-    item.name.toLowerCase().includes(search);
+    return item.name.toLowerCase().includes(search);
   });
+
+  console.log(filtersearch);
   return (
     <>
       {isLoading ? (
@@ -96,6 +99,8 @@ const ContactList = () => {
                   })}
               </tbody>
             </table>
+
+            {filtersearch.length === 0 && <Noresult />}
           </div>
         </div>
       )}

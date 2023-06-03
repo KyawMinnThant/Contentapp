@@ -7,6 +7,7 @@ import { useCreateContentMutation } from "../services/api/contentApi";
 import { useNavigate } from "react-router-dom";
 import { MdRestorePage, MdDelete } from "react-icons/md";
 import Cookies from "js-cookie";
+import Noresult from "./Noresult";
 
 const Trash = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,9 @@ const Trash = () => {
     dispatch(addPath("contactList"));
   }, [dispatch]);
 
+  const filtersearch = binItems?.filter((item) =>
+    item.name.toLowerCase().includes(search)
+  );
   // console.log(value);
   return (
     <>
@@ -124,7 +128,8 @@ const Trash = () => {
                       );
                     })}
                 </tbody>
-              </table>
+              </table>{" "}
+              {filtersearch.length === 0 && <Noresult />}
             </div>
           </div>
         ) : (

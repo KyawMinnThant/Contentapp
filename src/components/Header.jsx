@@ -36,11 +36,11 @@ const Header = () => {
   };
 
   return (
-    <>
+    <div className="">
       <div
         className={
           token
-            ? "px-3 py-3 shadow-md flex justify-between items-center"
+            ? "px-3 py-3 shadow-md flex justify-between items-center "
             : " px-3 py-3 shadow-md flex items-center absolute top-[-30%] "
         }
       >
@@ -305,7 +305,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
